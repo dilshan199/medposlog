@@ -1,0 +1,21 @@
+/* ::-webkit-scrollbar{
+    width: 5px;
+    background: none;
+}
+
+::-webkit-scrollbar-thumb{
+    background: '#007EFC';
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background: '#2B96FF';
+} */
+
+.close-dialog{
+    display: none;
+}
+
+.edit-model{
+    display: none;
+}
