@@ -16,7 +16,7 @@ class IsLogin
     public function handle(Request $request, Closure $next): Response
     {
         if(!session()->has('loggedin')){
-            return redirect('/oauth/sign-in')->with('error', 'Please Loggedin first');
+            return redirect('/oauth/sign-in')->with('error', 'Please login first');
         }
         return $next($request);
     }

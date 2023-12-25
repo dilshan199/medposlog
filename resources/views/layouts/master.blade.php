@@ -6,25 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Flowbite theme CSS cdn -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css"  rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('lib/flowbite/dist/flowbite.min.css') }}" type="text/css">
     <!-- Bootstrap Icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ asset('lib/bootstrap-icons/font/bootstrap-icons.min.css') }}" type="text/css">
     <!-- Default css -->
     <link rel="stylesheet" href="{{ asset('css/dist/output.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css">
     <!-- Jquery cdn -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="{{ asset('lib/jQuery/jquery-2.2.3.min.js') }}" type="text/javascript"></script>
 
     <title>@yield('title')</title>
 </head>
 <body class="bg-gray-100">
     <!-- Start top nav -->
-    <nav class="bg-white flex item-center justify-between shadow-md fixed top-0 left-0 w-full px-3 py-3">
+    <nav class="bg-white flex item-center justify-between shadow-md fixed top-0 left-0 w-full px-3 py-3 z-20">
         <div class="flex item-center justify-start">
-            <h2 class="text-2xl font-bold italic"><span class="text-azure-radiance-500">Med</span>poslog</h2>
+            <h2 class="text-2xl font-bold italic"><span class="text-azure-radiance-500">Med</span>One</h2>
             <ul class="ms-10 text-gray-700 flex item-center space-x-5">
                 <li>
-                    <a href="#" class="flex item-center text-center space-x-2 hover:text-azure-radiance-500 hover:bg-gray-100 rounded-md px-2 py-2">
+                    <a href="{{ route('welcome') }}" class="flex item-center text-center space-x-2 hover:text-azure-radiance-500 hover:bg-gray-100 rounded-md px-2 py-2">
                         <i class="bi bi-house-door"></i>
                         <span>Dashboard</span>
                     </a>
@@ -66,16 +66,52 @@
                     <div id="letterDrop" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white hover:text-azure-radiance-500 ">ACO</a>
+                                <a href="{{ route('letters.aco') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Airport</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white hover:text-azure-radiance-500 ">Clinic</a>
+                                <a href="{{ route('letters.clinic') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Request Letter</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white hover:text-azure-radiance-500 ">Fee</a>
+                                <a href="{{ route('letters.fee') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Fee</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white hover:text-azure-radiance-500 ">Letter 4</a>
+                                <a href="{{ route('letters.leaves') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Leaves</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('letters.letter') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Normal Referral</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('letters.radiology') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Radiology Referral</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('letters.admission') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Admission Referral</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('letters.blood-picture') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Blood Picture Referral</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('letters.common') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Common Letter</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a type="button" id="patientDropBtn" data-dropdown-toggle="patientDrop" class="flex item-center text-center space-x-2 cursor-pointer hover:text-azure-radiance-500 hover:bg-gray-100 rounded-md px-2 py-2">
+                        <i class="bi bi-hospital"></i>
+                        <span class="flex-1">Patients</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <div id="patientDrop" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                                <a href="{{ route('patient.index') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Add Patient</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('patient.list') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Patient List</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('patient.user-panel') }}" class="block px-4 py-2 hover:bg-gray-100 hover:text-azure-radiance-500 ">Patient Register(Receptionist)</a>
                             </li>
                         </ul>
                     </div>
@@ -140,6 +176,6 @@
     </div>
     <!-- End Panel -->
     <!-- Flowbite theme js cdn -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+    <script src="{{ asset('lib/flowbite/dist/flowbite.min.js') }}" type="text/javascript"></script>
 </body>
 </html>

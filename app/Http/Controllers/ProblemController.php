@@ -13,7 +13,10 @@ class ProblemController extends Controller
      */
     public function index()
     {
-        $problem = Problem::paginate(50);
+        $problem = DB::table('problem')
+        ->select('*')
+        ->orderBy('problem', 'asc')
+        ->paginate(50);
 
         if(session()->has('loggedin')){
             $user = DB::table('users')->select('*')->where('user_id', '=', session('loggedin'))->first();

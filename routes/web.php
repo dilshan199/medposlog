@@ -4,6 +4,7 @@ use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\DrugsController;
 use App\Http\Controllers\FrequencyController;
 use App\Http\Controllers\InvetigationController;
+use App\Http\Controllers\LettersController;
 use App\Http\Controllers\OauthController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProblemController;
@@ -28,7 +29,7 @@ Route::get('/', function () {
  * Oauth routes
  */
 Route::get('/oauth/sign-in', function(){return view('oauth.login');})->name('oauth.sign-in');
-Route::get('/oauth/create', [OauthController::class, 'index'])->name('oauth.index');
+Route::get('/oauth/create', [OauthController::class, 'index'])->name('oauth.index')->middleware('isLogin')->middleware('authorization');
 Route::post('/oauth/save', [OauthController::class, 'store'])->name('oauth.store');
 Route::get('/oauth/edit/{user_id}', [OauthController::class, 'edit'])->name('oauth.edit');
 Route::post('/oauth/update/{user_id}', [OauthController::class, 'update'])->name('oauth.update');
@@ -65,6 +66,21 @@ Route::controller(PatientController::class)->group(function() {
     Route::post('/patient/patient-data', 'addPatientData')->name('patient.add-data');
     Route::post('/patient/prescription', 'savePrescription')->name('patient.prescription');
     Route::post('/patient/add-to-cart', 'addToCart')->name('patient.add-to-cart');
+    Route::post('/patient/update-cart', 'updateCart')->name('patient.update-cart');
+    Route::get('/patient/delete-cart-item/{raw_id}', 'deleteCartItem')->name('patient.delete-cart-item');
+    Route::post('/patient/mixtard-insulin', 'mistardInsulin')->name('patient.mixtard');
+    Route::get('/patient/print/{prescription_id}/{check_date}', 'print')->name('patient.print');
+    Route::post('patient/register', 'patientRegister')->name('patient.resgister');
+    Route::get('/patient/clear-form', 'clearForm')->name('patient.clear-form');
+    Route::post('/patient/search', 'patientSearch')->name('patient.search');
+    Route::get('/patient/clear-prescription', 'clearPrescription')->name('patient.clear-prescription');
+    Route::get('patient/list', 'patientList')->name('patient.list');
+    Route::post('/patient/patient-search', 'seach')->name('patient.patient-search');
+    Route::get('/patient/edit/{patient_id}', 'editPatient')->name('patient.edit');
+    Route::post('/patient/update/{patient_id}', 'updatePatient')->name('patient.update');
+    Route::get('/patient/patient-new', 'viewPateintNew')->name('patient.patient-new');
+
+    Route::post('/patient/update', 'newUpdate')->name('patient.update');
 });
 
 /**
@@ -109,4 +125,37 @@ Route::controller(DrugsController::class)->group(function() {
     Route::get('/drugs/edit/{drug_id}', 'edit')->name('drugs.edit');
     Route::post('/drugs/update/{drug_id}', 'update')->name('drugs.update');
     Route::get('/drugs/delete/{drug_id}', 'destroy')->name('drugs.destroy');
+});
+
+/**
+ * Letters routes
+ */
+Route::controller(LettersController::class)->group(function() {
+    Route::get('/letters/aco', 'acoLetter')->name('letters.aco')->middleware('isLogin')->middleware('authorization');
+    Route::post('/letters/aco-print', 'acoLetterPost')->name('letters.aco-print');
+    Route::get('/letters/aco-letter-clear', 'acoLetterClear')->name('letters.aco-clear');
+    Route::get('/letters/fee', 'feeLetter')->name('letters.fee')->middleware('isLogin')->middleware('authorization');
+    Route::post('/letters/fee-print', 'feeLetterPost')->name('letters.fee-print');
+    Route::get('/letters/fee-clear', 'feeLetterClear')->name('letters.fee-clear');
+    Route::get('/letters/leaves', 'leavesLetterPage')->name('letters.leaves')->middleware('isLogin')->middleware('authorization');
+    Route::post('/letters/leave-print', 'leaveLetterPrint')->name('letters.leaves-print');
+    Route::get('/letters/leave-clear', 'leaveLetterClear')->name('letters.leaves-clear');
+    Route::get('/letters/clinic', 'clinicLetterPage')->name('letters.clinic')->middleware('isLogin')->middleware('authorization');
+    Route::post('/letters/clinic-print', 'clinicLetterPrint')->name('letters.clinic-print');
+    Route::get('/letters/clinic-clear', 'clinicLetterClear')->name('letters.clinic-clear');
+    Route::get('/letter/letter', 'letterPage')->name('letters.letter')->middleware('isLogin')->middleware('authorization');
+    Route::post('/letter/letter-print', 'letterPrint')->name('letters.letter-print');
+    Route::get('/letter/letter-clear', 'letterClear')->name('letters.letter-clear');
+    Route::get('/letters/r-letter', 'radiologLetterPage')->name('letters.radiology')->middleware('isLogin')->middleware('authorization');
+    Route::post('/letters/r-letter-print', 'radiologyPrint')->name('letters.radiology-print');
+    Route::get('/letters/r-letter-clear', 'radiologyClear')->name('letters.radiology-clear');
+    Route::get('/letter/admission', 'admissionLetterPage')->name('letters.admission');
+    Route::post('/letter/admission-print', 'admissionPrint')->name('letters.admission-print');
+    Route::get('/letter/admission-clear', 'admissionClear')->name('letters.admission-clear');
+    Route::get('/letter/b-letter', 'bloodPictureLetter')->name('letters.blood-picture');
+    Route::post('/letter/b-letter-print', 'bloodPictureLetterPrint')->name('letters.blodd-picture-print');
+    Route::get('/letter/b-letter-clear', 'bloodPictureLetterClear')->name('letters.blood-picture-clear');
+    Route::get('/letter/common', 'commonLetterPage')->name('letters.common');
+    Route::post('/letter/common-print', 'commonPrint')->name('letters.common-print');
+    Route::get('/letter/common-clear', 'commonLetterClear')->name('letters.common-clear');
 });

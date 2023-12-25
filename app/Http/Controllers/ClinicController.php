@@ -13,7 +13,10 @@ class ClinicController extends Controller
      */
     public function index()
     {
-        $clinic = Clinic::paginate(50);
+        $clinic = DB::table('clinic')
+        ->select('*')
+        ->orderBy('clinic_followup', 'asc')
+        ->paginate(50);
 
         if(session()->has('loggedin')){
             $user = DB::table('users')->select('*')->where('user_id', '=', session('loggedin'))->first();

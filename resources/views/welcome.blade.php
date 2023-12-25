@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Welcome to Mediposlog')
+@section('title', 'Welcome to MedOne Patient Management System')
 
 @section('content')
     <!-- Start breadcrumb -->
@@ -42,14 +42,113 @@
     <!-- End breadcrumb -->
 
     <!-- Start page content -->
-    <div class="w-full rounded-md shadow-md px-3 py-3 bg-white mt-3">
-        Page content
+    <div class="w-full mt-3">
+        <div class="grid grid-cols-4 gap-4">
+            <div class="px-2 py-2 rounded-md shadow-sm bg-alizarin-crimson-600">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h6 class="text-sm text-white font-normal">Today Registred</h6>
+                        <h1 class="text-3xl text-white font-normal">
+                            @if ($total_registerd > 0)
+                                {{ $total_registerd}}
+                            @else
+                                @php
+                                    echo '0';
+                                @endphp
+                            @endif
+                        </h1>
+                    </div>
+                    <i class="bi bi-calendar2-check text-5xl text-white"></i>
+                </div>
+            </div>
+            <div class="px-2 py-2 rounded-md shadow-sm bg-azure-radiance-500">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h6 class="text-sm text-white font-normal">Visited Patients</h6>
+                        <h1 class="text-3xl text-white font-normal">
+                            @if ($total_visited > 0)
+                                {{ $total_visited}}
+                            @else
+                                @php
+                                    echo '0';
+                                @endphp
+                            @endif
+                        </h1>
+                    </div>
+                    <i class="bi bi-people text-5xl text-white"></i>
+                </div>
+            </div>
+            <div class="px-2 py-2 rounded-md shadow-sm bg-azure-radiance-400">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h6 class="text-sm text-white font-normal">Not Visit</h6>
+                        <h1 class="text-3xl text-white font-normal">
+                            @if ($total_not_visited > 0)
+                                {{ $total_not_visited}}
+                            @else
+                                @php
+                                    echo '0';
+                                @endphp
+                            @endif
+                        </h1>
+                    </div>
+                    <i class="bi bi-person-x text-5xl text-white"></i>
+                </div>
+            </div>
+            <div></div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mt-3">
+            <div class="col-span-3 bg-white rounded-md shadow-sm">
+                <div class="border-b border-b-gray-400 px-2 py-3 flex items-center justify-between">
+                    <h5 class="text-lg font-medium">Today Check List</h5>
+                    <i class="bi bi-chevron-down"></i>
+                </div>
+                <div class="px-2 py-2">
+                    @if (count($patient) > 0)
+                        <table class="border border-gray-400 w-full text-sm">
+                            <thead>
+                                <th class="text-sm p-1 text-center border border-gray-400">Patient ID</th>
+                                <th class="text-sm p-1 text-center border border-gray-400">Name</th>
+                                <th class="text-sm p-1 text-center border border-gray-400">NIC</th>
+                                <th class="text-sm p-1 text-center border border-gray-400">Contact No</th>
+                                <th class="text-sm p-1 text-center border border-gray-400">Status</th>
+                            </thead>
+                            <tbody>
+                                @foreach ($patient as $pa)
+                                    <tr>
+                                        <td class="border border-gray-400 p-1">{{ $pa->patient_id }}</td>
+                                        <td class="border border-gray-400 p-1">{{ $pa->name }}</td>
+                                        <td class="border border-gray-400 p-1">{{ $pa->nic }}</td>
+                                        <td class="border border-gray-400 p-1">{{ $pa->contact_no }}</td>
+                                        <td class="text-center border border-gray-400 p-1">
+                                            @if ($pa->check_status == 1)
+                                                <span class="p-1 rounded-sm bg-azure-radiance-100 text-azure-radiance-600 font-medium text-xs">Visited</span>
+                                            @else
+                                                <span class="p-1 rounded-sm bg-alizarin-crimson-100 text-alizarin-crimson-600 font-medium text-xs">Not Visit</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="mt-3">
+                            {{ $patient->links() }}
+                        </div>
+                    @else
+                        <div class="mt-5">
+                            <h5 class="text-md font-bold text-center text-gray-600">No Any Records To View</h5>
+                            <p class="text-center text-xs font-normal text-gray-400">No any patinet register today</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
     <!-- End page content -->
 
     <!-- Start page footer -->
     <div class="w-full py-3">
-        <p class="text-xs font-normal text-gray-500 text-center">Medposlog&copy;2023. Software By: All In One Holding.</p>
+        <p class="text-xs font-normal text-gray-500 text-center">MedOne&copy;2023. Software By: All In One Solutions.</p>
     </div>
     <!-- End page footer -->
 @endsection

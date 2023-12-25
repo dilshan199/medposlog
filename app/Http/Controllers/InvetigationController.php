@@ -14,7 +14,10 @@ class InvetigationController extends Controller
     public function index()
     {
        //
-       $investigation = Investigation::paginate(50);
+       $investigation = DB::table('investigation')
+       ->select('*')
+       ->orderBy('investigation', 'asc')
+       ->paginate(50);
 
        if(session()->has('loggedin')){
         $user = DB::table('users')->select('*')->where('user_id', '=', session('loggedin'))->first();

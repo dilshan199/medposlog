@@ -6,10 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/dist/output.css') }}" type="text/css">
     <!-- Flowbite theme CSS cdn -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css"  rel="stylesheet" />
-    <!-- Bootstrap Icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <title>Medposlog | Sign in</title>
+    <link rel="stylesheet" href="{{ asset('lib/flowbite/dist/flowbite.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('lib/bootstrap-icons/font/bootstrap-icons.min.css') }}" type="text/css">
+    <title>MedOne | Sign in</title>
 </head>
 <body class="bg-gray-100 pt-[150px]">
     <div class="w-[350px] h-auto m-auto mb-3">
@@ -47,7 +46,7 @@
         @endif
     </div>
     <div class="w-[350px] h-auto rounded-md bg-white shadow-md m-auto px-3 py-4">
-        <h2 class="text-2xl text-center italic font-bold mb-6"><span class="text-azure-radiance-500">Med</span>poslog</h2>
+        <h2 class="text-2xl text-center italic font-bold mb-6"><span class="text-azure-radiance-500">Med</span>One</h2>
         <form action="{{ route('oauth.login') }}" method="post">
             @csrf
             <div class="w-full mb-3">
@@ -59,12 +58,12 @@
                 <input type="password" name="password" id="password" class="w-full rounded-md border border-gray-300" value="">
             </div>
             <div class="w-full mb-3">
-                <button type="submit" name="signin" value="Sign in" class="w-full p-2 rounded-md shadow-sm text-white font-medium bg-azure-radiance-500 hover:bg-azure-radiance-400">Sign in</button>
+                <button type="submit" name="signin" value="Sign in" class="w-full p-2 rounded-md shadow-sm text-white font-medium bg-azure-radiance-500 hover:bg-azure-radiance-400" style="background:  #007EFC;">Sign in</button>
             </div>
-            <p class="text-center text-gray-600 text-xs font-normal mt-5">Software By: All In One Holding &copy; 2023</p>
+            <p class="text-center text-gray-600 text-xs font-normal mt-5">Software By: All In One Solutions &copy; 2023</p>
         </form>
     </div>
     <!-- Flowbite theme js cdn -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+    <script src="{{ asset('lib/flowbite/dist/flowbite.min.js') }}" type="text/javascript"></script>
 </body>
 </html>

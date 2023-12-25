@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Medposlog | Manage Investigations')
+@section('title', 'MedOne | Manage Investigations')
 
 @section('content')
     <!-- Start breadcrumb -->
@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between">
             <ul class="flex text-sm text-gray-600 font-normal space-x-1">
                 <li>
-                    <a href="#" class="hover:text-azure-radiance-500"><i class="bi bi-house-door-fill"></i></a>
+                    <a href="{{ route('welcome') }}" class="hover:text-azure-radiance-500"><i class="bi bi-house-door-fill"></i></a>
                 </li>
                 <li>
                     <span>/&nbsp;Clinic&nbsp;/</span>
@@ -26,9 +26,7 @@
                     </div>
                     <button type="button" class="ml-auto -mx-1.5 -my-1.5 text-azure-radiance-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-azure-radiance-100 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
                         <span class="sr-only">Close</span>
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
+                        <i class="bi bi-x-lg"></i>
                     </button>
                 </div>
             @endif
@@ -84,6 +82,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-3">
+                    {{ $investigation->links() }}
+                </div>
             @else
                 <div class="mt-5">
                     <h5 class="text-md font-bold text-center text-gray-600">No Any Records To View</h5>
@@ -96,7 +97,7 @@
 
     <!-- Start page footer -->
     <div class="w-full py-3">
-        <p class="text-xs font-normal text-gray-500 text-center">Medposlog&copy;2023. Software By: All In One Holding.</p>
+        <p class="text-xs font-normal text-gray-500 text-center">MedOne&copy;2023. Software By: All In One Solutions.</p>
     </div>
     <!-- End page footer -->
 
@@ -125,9 +126,7 @@
                         Edit Investigation
                     </h3>
                     <button type="button" id="closeBtn" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
+                        <i class="bi bi-x-lg"></i>
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>

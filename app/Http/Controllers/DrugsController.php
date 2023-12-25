@@ -13,7 +13,11 @@ class DrugsController extends Controller
      */
     public function index()
     {
-        $drugs = Drugs::paginate(50);
+
+        $drugs = DB::table('drugs')
+        ->select('*')
+        ->orderBy('drug_name', 'asc')
+        ->paginate(50);
 
         if(session()->has('loggedin')){
             $user = DB::table('users')->select('*')->where('user_id', '=', session('loggedin'))->first();

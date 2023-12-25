@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -45,7 +46,7 @@ class OauthController extends Controller
             'user_type' => ['required'],
             'user_name' => ['required', 'unique:users,user_name'],
             'password' => ['required', Password::min(6)],
-            'retype_password' => ['required', 'same:password', Password::min(6)]
+ 
         ]);
 
         $user = new User();
@@ -125,7 +126,7 @@ class OauthController extends Controller
                     session()->put('loggedin',$user_id->user_id);
 
                     //Redirect to dashboard
-                    return redirect('/')->with('success', 'Loggedin successfully');
+                    return redirect('/')->with('success', 'Logging successfully');
 
                 }else{
 
@@ -168,7 +169,43 @@ class OauthController extends Controller
             $user_data =  $user;
         }
 
-        return view('welcome', compact('user_data'));
+        $current_date = Carbon::now('Asia/Colombo')->format('Y-m-d');
+        $total_registerd = $total_visited = $total_not_visited = 0;
+
+        // Get total registerd patient
+        $total_registerd_patient = DB::table('check_list')
+        ->select(DB::raw('count(*) as registerd_patient'))
+        ->where('date', '=', $current_date)
+        ->first();
+
+        $total_registerd = $total_registerd_patient->registerd_patient;
+
+        // Get total visited patient related to current date
+        $total_visited_patient = DB::table('check_list')
+        ->select(DB::raw('count(*) as visited'))
+        ->where('date', '=', $current_date)
+        ->where('check_status', '=', '1')
+        ->first();
+
+        $total_visited = $total_visited_patient->visited;
+
+        // Get total not visited patient related to current date
+        $total_not_visited_patient = DB::table('check_list')
+        ->select(DB::raw('count(*) as not_visited'))
+        ->where('date', '=', $current_date)
+        ->where('check_status', '=', '0')
+        ->first();
+
+        $total_not_visited = $total_not_visited_patient->not_visited;
+
+        // Get all today registerd patient
+        $patient = DB::table('check_list')
+        ->select('*')
+        ->join('patient', 'patient.patient_id', '=', 'check_list.patient_id')
+        ->where('date', '=', $current_date)
+        ->paginate(50);
+
+        return view('welcome', compact('user_data', 'total_registerd', 'total_visited', 'total_not_visited', 'patient'));
 
     }
 }

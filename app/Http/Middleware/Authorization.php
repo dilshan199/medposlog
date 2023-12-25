@@ -20,7 +20,7 @@ class Authorization
             $user = DB::table('users')->select('*')->where('user_id', '=', session('loggedin'))->first();
 
             if($user->user_type == "Receptionist"){
-                return redirect()->back()->with('warning', 'Your are not permited to access that page');
+                return redirect()->back()->with('warning', '<strong>Access denied!</strong> You are not permission to access that page');
             }else{
 
             }
